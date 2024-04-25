@@ -1,0 +1,112 @@
+﻿<Window x:Class="FitnessStudio.Views.KarteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FitnessStudio.Views"
+        xmlns:styles="clr-namespace:FitnessStudio.Styles"
+        xmlns:viewModels="clr-namespace:FitnessStudio.ViewModels"
+        mc:Ignorable="d"
+        Title="Kunden Karten" Height="480" Width="854" x:Name="karteWindow">
+
+    <Window.DataContext>
+        <viewModels:KarteWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="\Styles\CustomizedWindowView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedButtonView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedLabelView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedTextBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedCheckBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedComboBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedDataGridView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="535"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <styles:CustomizedDataGrid  Grid.Row="0"
+                                        AutoGenerateColumns="False"
+                                        x:Name="kartenGrid" 
+                                        VerticalAlignment="Stretch" 
+                                        ItemsSource="{Binding KartenList}" 
+                                        SelectionChanged="KartenGrid_OnSelectionChanged" 
+                                        IsReadOnly="True">
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="KarteID" Binding="{Binding Path=KarteID}" Width="100"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=KarteName}" Width="150"/>
+                    <DataGridTextColumn Header="Wert (Unterricht)" Binding="{Binding Path=KarteWert}" Width="*"/>
+                    <DataGridTextColumn Header="Preise" Binding="{Binding Path=KartePrice, StringFormat='0.00'}" Width="110"/>
+                </DataGrid.Columns>
+            </styles:CustomizedDataGrid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <styles:CustomizedButton Grid.Column="1" Content="Neu" Command="{Binding NewCommand}"/>
+                <styles:CustomizedButton Grid.Column="3" Content="Löschen" Command="{Binding DelCommand}" CommandParameter="{Binding ElementName=karteWindow}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2" Margin="5 0 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Background="AliceBlue" Padding="5" BorderBrush="#005b7c" BorderThickness="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <styles:CustomizedLabel Grid.Row="0" Grid.Column="0" Content="Name"/>
+                    <styles:CustomizedTextBox Grid.Row="0" Grid.Column="1" Text="{Binding KarteContext.KarteName, Mode=TwoWay}"/>
+                    <styles:CustomizedLabel Grid.Row="1" Grid.Column="0" Content="Wert (Unter.)"/>
+                    <styles:CustomizedTextBox Grid.Row="1" Grid.Column="1" Text="{Binding KarteContext.KarteWert, Mode=TwoWay}"/>
+                    <styles:CustomizedLabel Grid.Row="2" Grid.Column="0" Content="Price"/>
+                    <styles:CustomizedTextBox Grid.Row="2" Grid.Column="1" Text="{Binding KarteContext.KartePrice, Mode=TwoWay, StringFormat='0.00'}"/>
+                </Grid>
+            </GroupBox>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <styles:CustomizedButton Grid.Column="1" Content="Speichern" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=karteWindow}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

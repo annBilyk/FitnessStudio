@@ -1,0 +1,106 @@
+﻿<Window x:Class="FitnessStudio.Views.PostleitzahlenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FitnessStudio.Views"
+        xmlns:styles="clr-namespace:FitnessStudio.Styles"
+        xmlns:viewModels="clr-namespace:FitnessStudio.ViewModels"
+        mc:Ignorable="d"
+        Title="Postleitzahlen" Height="400" Width="700" x:Name="postWindow">
+
+    <Window.DataContext>
+        <viewModels:PostleitzahlenWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="\Styles\CustomizedButtonView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedLabelView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedTextBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedDataGridView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="370"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <styles:CustomizedDataGrid  Grid.Row="0"
+                                    AutoGenerateColumns="False"
+                                    x:Name="postGrid" 
+                                    VerticalAlignment="Stretch" 
+                                    ItemsSource="{Binding PostList}" 
+                                    SelectionChanged="PostGrid_OnSelectionChanged" 
+                                    IsReadOnly="True" 
+                                    MouseDoubleClick="PostGrid_OnMouseDoubleClick">
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="PLZ" Binding="{Binding Path=PostID}" Width="120" />
+                    <DataGridTextColumn Header="Ort" Binding="{Binding Path=PostOrt}" Width="*"/>
+                </DataGrid.Columns>
+            </styles:CustomizedDataGrid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <styles:CustomizedButton Grid.Column="1" Content="Neu" Command="{Binding NewCommand}"/>
+                <styles:CustomizedButton Grid.Column="3" Content="Löschen" Command="{Binding DelCommand}" CommandParameter="{Binding ElementName=postWindow}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2" Margin="5 0 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Background="AliceBlue" Padding="5" BorderBrush="#005b7c" BorderThickness="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <styles:CustomizedLabel Grid.Row="0" Grid.Column="0" Content="PLZ"/>
+                    <styles:CustomizedTextBox Grid.Row="0" Grid.Column="1" Text="{Binding PostContext.PostID}"/>
+                    <styles:CustomizedLabel Grid.Row="1" Grid.Column="0" Content="Ort"/>
+                    <styles:CustomizedTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding PostContext.PostOrt}"/>
+                </Grid>
+            </GroupBox>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <styles:CustomizedButton Grid.Column="1" Content="Speichern" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=postWindow}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

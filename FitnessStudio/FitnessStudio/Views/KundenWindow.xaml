@@ -1,0 +1,156 @@
+﻿<Window x:Class="FitnessStudio.Views.KundenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FitnessStudio.Views"
+        xmlns:styles="clr-namespace:FitnessStudio.Styles"
+        xmlns:vm="clr-namespace:FitnessStudio.ViewModels"
+        xmlns:gl="clr-namespace:System.Globalization;assembly=System.Runtime"
+        mc:Ignorable="d"
+        Title="Kunden" Height="620" Width="1102" x:Name="kundWindow">
+
+    <Window.DataContext>
+        <vm:KundenWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="\Styles\CustomizedMenuButtonView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedWindowView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedButtonView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedLabelView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedTextBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedCheckBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedComboBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedDataGridView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="650"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <styles:CustomizedDataGrid  Grid.Row="0"
+                                        AutoGenerateColumns="False"
+                                        x:Name="kundenGrid" 
+                                        VerticalAlignment="Stretch" 
+                                        ItemsSource="{Binding KundList}" 
+                                        IsReadOnly="True" 
+                                        SelectionChanged="KundenGrid_OnSelectionChanged" 
+                                        SelectionMode="Single">
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="K.Nr" Width="85" Binding="{Binding Path=KundID}"/>
+                    <DataGridTextColumn Header="Vorname" Width="200" Binding="{Binding Path=KundVorname}"/>
+                    <DataGridTextColumn Header="Nachname" Width="200" Binding="{Binding Path=KundNachname}"/>
+                    <DataGridTextColumn Header="Geburtsdatum" Width="*" Binding="{Binding Path=KundGebDatum, StringFormat='dd/MM/yyyy'}"/>
+                </DataGrid.Columns>
+            </styles:CustomizedDataGrid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <styles:CustomizedButton Grid.Column="1" Content="Neu" Command="{Binding NewCommand}"/>
+                <styles:CustomizedButton Grid.Column="3" Content="Löschen" Command="{Binding DelCommand}" CommandParameter="{Binding ElementName=kundWindow}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <GroupBox x:Name="GroupBox" Grid.Row="0" Margin="5" Background="AliceBlue" Padding="5" BorderBrush="#005b7c" BorderThickness="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="120"/>
+                    </Grid.ColumnDefinitions>
+                    <styles:CustomizedLabel Grid.Row="0" Grid.Column="0" Content="Kunden Nr."/>
+                    <styles:CustomizedTextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding KundenContext.KundID, Mode=OneWay}" IsReadOnly="True"/>
+                    <styles:CustomizedLabel Grid.Row="1" Grid.Column="0" Content="Geb.Datum"/>
+                    <styles:CustomizedTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding KundenContext.KundGebDatum, Mode=TwoWay, StringFormat='dd/MM/yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"/>
+                    <styles:CustomizedLabel Grid.Row="2" Grid.Column="0" Content="Vorname"/>
+                    <styles:CustomizedTextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding KundenContext.KundVorname, Mode=TwoWay}"/>
+                    <styles:CustomizedLabel Grid.Row="3" Grid.Column="0" Content="Nachname"/>
+                    <styles:CustomizedTextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding KundenContext.KundNachname, Mode=TwoWay}"/>
+                    <styles:CustomizedLabel Grid.Row="4" Grid.Column="0" Content="Adresse"/>
+                    <styles:CustomizedTextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding KundenContext.KundAdresse, Mode=TwoWay}"/>
+                    <styles:CustomizedLabel Grid.Row="5" Grid.Column="0" Content="PLZ"/>
+                    <styles:CustomizedTextBox x:Name="plzTb" Grid.Row="5" Grid.Column="1" KeyDown="Plz_OnKeyDown" Text="{Binding KundenContext.KundPLZNavigation.PostID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <styles:CustomizedLabel Grid.Row="5" Grid.Column="2" Content="Ort"/>
+                    <styles:CustomizedTextBox x:Name="ortTb" Grid.Row="5" Grid.Column="3" Text="{Binding KundenContext.KundPLZNavigation.PostOrt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+
+                    <styles:CustomizedCheckBox Grid.Row="0" Grid.Column="3" Content="Consent" HorizontalAlignment="Right" IsChecked="{Binding KundenContext.KundConsent, Mode=TwoWay}"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Row="1" Margin="5" Background="AliceBlue" Padding="5" BorderBrush="#005b7c" BorderThickness="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="45"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="140"/>
+                    </Grid.ColumnDefinitions>
+                    <styles:CustomizedLabel Grid.Row="0" Grid.Column="0" Content="Kartentyp"/>
+                    <styles:CustomizedTextBox Grid.Row="0" Grid.Column="1" x:Name="karteTb" Text="{Binding KundenContext.KundKartNumNavigation.KarteName, Mode=OneWay}" IsReadOnly="True" />
+                    <styles:CustomizedLabel Grid.Row="1" Grid.Column="0" Content="Kartenguthaben"/>
+                    <styles:CustomizedTextBox Grid.Row="1" Grid.Column="1" x:Name="karteGuthTb" Text="{Binding KundenContext.KundKartGuthaben, Mode=OneWay}" IsReadOnly="True" />
+                    <styles:CustomizedButton Grid.Row="4" Grid.Column="2" Content="Rechnungen" Background="#f2dcc5" BorderBrush="#bc672c" Foreground="#002447" Click="Rechnungen_OnClick"/>
+                    <styles:CustomizedButton Grid.Row="4" Grid.Column="0" Content="Termin" Click="Termin_OnClick"/>
+                </Grid>
+            </GroupBox>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <styles:CustomizedButton Grid.Column="3" Content="Speichern" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=kundWindow}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

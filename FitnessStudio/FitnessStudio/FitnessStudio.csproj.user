@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\KalenderWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\KarteWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\KundenSucheWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\KundenWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PostleitzahlenWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RechnungenWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TrainerenWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\CustomizedButtonView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CustomizedCheckBoxView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CustomizedComboBoxView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CustomizedLabelView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CustomizedMenuButtonView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CustomizedTextBoxView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CustomizedWindowView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CustomizedDataGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\KalenderWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\KarteWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\KundenSucheWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\KundenWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PostleitzahlenWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RechnungenWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TrainerenWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

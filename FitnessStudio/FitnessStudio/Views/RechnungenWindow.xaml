@@ -1,0 +1,127 @@
+﻿<Window x:Class="FitnessStudio.Views.RechnungenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:local="clr-namespace:FitnessStudio.Views"
+      xmlns:styles="clr-namespace:FitnessStudio.Styles"
+      xmlns:viewModels="clr-namespace:FitnessStudio.ViewModels"
+      xmlns:gl="clr-namespace:System.Globalization;assembly=System.Runtime"
+      mc:Ignorable="d"
+Title="Rechnungen" Height="620" Width="1102" x:Name="rechWindow">
+
+    <Window.DataContext>
+        <viewModels:RechnungWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="\Styles\CustomizedWindowView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedButtonView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedLabelView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedTextBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedCheckBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedComboBoxView.xaml"/>
+                <ResourceDictionary Source="\Styles\CustomizedDataGridView.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="760"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <styles:CustomizedDataGrid  Grid.Row="0"
+                                        AutoGenerateColumns="False"
+                                        x:Name="rechnungGrid" 
+                                        VerticalAlignment="Stretch" 
+                                        ItemsSource="{Binding RechnungList}" 
+                                        SelectionChanged="RechnnungGrid_OnSelectionChanged" 
+                                        SelectionMode="Extended" IsReadOnly="True" 
+                                        GotFocus="RechnungGrid_OnGotFocus">
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="Rech.Nr" Binding="{Binding RechID}" Width="90"/>
+                    <DataGridTextColumn Header="Vorname" Binding="{Binding RechKund.KundVorname}" Width="170"/>
+                    <DataGridTextColumn Header="Nachname" Binding="{Binding RechKund.KundNachname}" Width="170"/>
+                    <DataGridTextColumn Header="Rech.datum" Binding="{Binding RechDatum, StringFormat='dd/MM/yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" Width="125"/>
+                    <DataGridTextColumn Header="Summe" Binding="{Binding RechSumme}" Width="100"/>
+                    <DataGridCheckBoxColumn Header="Bezahlt" Binding="{Binding RechIstBezahlt}" Width="100"/>
+                </DataGrid.Columns>
+            </styles:CustomizedDataGrid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <styles:CustomizedButton Grid.Column="1" Content="Neu" Command="{Binding NewCommand}"/>
+                <styles:CustomizedButton Grid.Column="3" Content="Löschen" Command="{Binding DelCommand}" CommandParameter="{Binding ElementName=rechWindow}"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2" Margin="5 0 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" x:Name="kundGb" Background="AliceBlue" Padding="5" BorderBrush="#005b7c" BorderThickness="2">
+                <Grid x:Name="groupGrid"> 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                        <RowDefinition Height="37"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="95"/>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <styles:CustomizedLabel Grid.Row="0" Grid.Column="0" Content="Kunden Nr."/>
+                    <styles:CustomizedTextBox Grid.Row="0" Grid.Column="1" x:Name="kundIdTb" Text="{Binding RechContext.RechKundID, Mode=TwoWay}" KeyDown="Kund_OnKeyDown"/>
+                    <styles:CustomizedLabel Grid.Row="1" Grid.Column="0" Content="Vorname"/>
+                    <styles:CustomizedTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" x:Name="kundNameTb" Text="{Binding RechContext.RechKund.KundVorname, Mode=TwoWay}" KeyDown="Kund_OnKeyDown"/>
+                    <styles:CustomizedLabel Grid.Row="2" Grid.Column="0" Content="Nachname"/>
+                    <styles:CustomizedTextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="kundNachNameTb" Text="{Binding RechContext.RechKund.KundNachname, Mode=TwoWay}" KeyDown="Kund_OnKeyDown"/>
+                    <styles:CustomizedLabel Grid.Row="3" Grid.Column="0" Content="Kartentyp" />
+                    <styles:CustomizedComboBox Grid.Row="3" Grid.Column="1" x:Name="karteCombo" Margin="3" ItemsSource="{Binding RechKartenList, Mode=TwoWay}" DisplayMemberPath="KarteName" SelectionChanged="Selector_OnSelectionChanged" SelectedItem="{Binding RechKarte, Mode=TwoWay}"/>
+                    <styles:CustomizedLabel Grid.Row="4" Grid.Column="0" Content="Summe"/>
+                    <styles:CustomizedTextBox Grid.Row="4" Grid.Column="1" x:Name="summeTb" Text="{Binding RechContext.RechSumme, Mode=TwoWay, StringFormat='0.00'}" IsReadOnly="True"/>
+                    <styles:CustomizedLabel Grid.Row="5" Grid.Column="0" Content="Rech.Datum"/>
+                    <styles:CustomizedTextBox Grid.Row="5" Grid.Column="1" Text="{Binding RechContext.RechDatum, Mode=TwoWay, StringFormat='dd/MM/yyyy', ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}"/>
+                    <styles:CustomizedCheckBox Grid.Row="6" Grid.Column="1" Content="Bezahlt" HorizontalAlignment="Left" IsChecked="{Binding RechContext.RechIstBezahlt, Mode=TwoWay}" Checked="RechBezahlt_OnChecked" Unchecked="RechBezahlt_OnUnchecked"/>
+                </Grid>
+            </GroupBox>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <styles:CustomizedButton Grid.Column="1" Content="Speichern" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=rechWindow}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
